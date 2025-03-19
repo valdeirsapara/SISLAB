@@ -13,7 +13,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings
     volumes:
-     - ./data/db_data:/app/src/data/db_data
+     - ./data/:/app/src/data/
     ports:
       - 8000:8000
     depends_on:
