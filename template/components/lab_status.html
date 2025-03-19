@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-8 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="mb-3">Status do Laboratório:</h5>
+                <div class="d-flex flex-wrap">
+                    {%if laboratorios%}
+                    {%for laboratorio in laboratorios%}
+                    <div class="me-4 mb-2">
+                        <span class="status-indicator {%if laboratorio.status == 0%}status-available{%else%}status-busy{%endif%}"></span>
+                        <span>{{laboratorio.nome}} - {%if laboratorio.status == 0%}Disponível{%else%}Ocupado até {{laboratorio.horario_fim}}{%endif%}</span>
+                    </div>
+                    {%endfor%}
+                    {%else%}
+                    <div class="me-4 mb-2">
+                        <span>Nenhum laboratório cadastrado</span>
+                    </div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-4 mb-3">
+        <div class="card announcement-card">
+            <div class="card-body py-2">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-bullhorn me-2 text-warning"></i>
+                    <p class="mb-0">Manutenção programada: 20/03 das 8h às 12h</p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
