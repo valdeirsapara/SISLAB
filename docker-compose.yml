@@ -1,0 +1,22 @@
+services:
+  python:
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    image: github.com/valdeir027/docker/python:latest
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings
+    volumes:
+     - ./data/db_data:/app/src/data/db_data
+    ports:
+      - 8000:8000
+    depends_on:
+      - python
+    env_file:
+      - .env
