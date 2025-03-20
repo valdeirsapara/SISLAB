@@ -34,7 +34,9 @@ INSTALLED_APPS = [
 ]
 
 INSTALLED_APPS += [
-    'contrib'
+    'contrib',
+    'laboratory',
+    'news',
 ]
 
 MIDDLEWARE = [
