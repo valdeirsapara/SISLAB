@@ -6,7 +6,7 @@ from news.models import News
 
 # Create your views here.
 def home(request):
-    laboratories = Laboratory.objects.filter(ativo=True,status=Laboratory.DISPONIVEL)
+    laboratories = Laboratory.objects.filter(ativo=True,status=Laboratory.DISPONIVEL)[:3]
     news = News.objects.filter(ativo=True).order_by('-data_criacao').first()
     modelo3d = Model3D.objects.filter(ativo=True).order_by('data_modificacao').first()
     livro = Livro.objects.filter(ativo=True).order_by('data_modificacao').first()
