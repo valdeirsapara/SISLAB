@@ -1,8 +1,8 @@
-# SLAB - Sistema de Gerenciamento de Recursos Laboratoriais
+# SISLAB - Sistema de Gerenciamento de Recursos Laboratoriais
 
 ## Sobre o Projeto
 
-SLAB é um sistema desenvolvido para controlar o acesso e uso de recursos em laboratórios educacionais. Esta plataforma permite que professores e usuários autorizados possam agendar horários de uso do laboratório, emprestar livros e utilizar modelos 3D disponíveis.
+SISLAB é um sistema desenvolvido para controlar o acesso e uso de recursos em laboratórios educacionais. Esta plataforma permite que professores e usuários autorizados possam agendar horários de uso do laboratório, emprestar livros e utilizar modelos 3D disponíveis.
 
 O sistema possui um fluxo de aprovação onde as solicitações dos usuários precisam ser aceitas por um gerente.
 
@@ -24,8 +24,8 @@ O sistema possui um fluxo de aprovação onde as solicitações dos usuários pr
 1. **Clone o repositório**
 
 ```bash
-git clone https://github.com/seu-usuario/SLAB.git
-cd SLAB
+git clone https://github.com/seu-usuario/SISLAB.git
+cd SISLAB
 ```
 
 2. **Configure o arquivo .env**
