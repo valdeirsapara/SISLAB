@@ -139,3 +139,8 @@ footer {
     background-color: #d68910;
     border-color: #d68910;
 }
+
+.hero {
+    background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://via.placeholder.com/1920x1080') center/cover no-repeat;
+    padding: 4rem 0;
+}
