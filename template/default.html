@@ -43,9 +43,11 @@
             <div class="main-header">
                 <h1>{% block page_title %}Página Inicial{% endblock %}</h1>
                 <div class="user-actions">
-                    <button type="button" class="btn btn-outline-light btn-sm">
+                    {% block page_actions %}
+                    <!-- <button type="button" class="btn btn-outline-light btn-sm">
                         <i class="fas fa-user"></i> Usuário <i class="fas fa-caret-down"></i>
-                    </button>
+                    </button> -->
+                    {%endblock%}
                 </div>
             </div>
             
