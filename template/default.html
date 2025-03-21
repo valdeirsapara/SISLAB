@@ -1,6 +1,6 @@
 {%load static%}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -16,15 +17,112 @@
             --light-bg: #f8f9fa;
             --dark-bg: #2c3e50;
         }
-    </style>   
+    </style>
+    {%block css%}{%endblock%}
 </head>
 <body>
-    {% include 'components/header.html'%}
-
-    <!-- <div class="container mt-4"> -->
-        {% block content %}
-        {% endblock %}
-    <!-- </div> -->
+    <!-- Sistema de mensagens -->
+    {% if messages %}
+        <div class="messages-container position-fixed top-0 end-0 p-3 mt-2 me-2" style="z-index: 1050; max-width: 300px;">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} shadow-sm mb-2 p-2 ps-3 animate__animated animate__fadeInRight">
+                <small>{{ message }}</small>
+                <button type="button" class="btn-close btn-close-sm float-end ms-2" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     
+    <!-- Layout principal com sidebar -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        {% include 'components/sidebar.html' %}
+        <!-- Conteúdo principal -->
+        <div class="content w-100 h-100" id="mainContent">
+            <!-- Header com título da página -->
+            <div class="main-header">
+                <h1>{% block page_title %}Página Inicial{% endblock %}</h1>
+                <div class="user-actions">
+                    <button type="button" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-user"></i> Usuário <i class="fas fa-caret-down"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Conteúdo específico da página -->
+            <div class="w-100 h-100">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para controle da sidebar e mensagens -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Controle da Sidebar em telas pequenas
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
+                    mainContent.classList.toggle('sidebar-open');
+                });
+            }
+            
+            // Adicionar classe ativa ao menu atual
+            const currentLocation = window.location.pathname;
+            const menuLinks = document.querySelectorAll('.sidebar-menu a');
+            
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentLocation) {
+                    link.classList.add('active');
+                    
+                    // Se for um submenu, expande o menu pai
+                    const parentCollapse = link.closest('.collapse');
+                    if (parentCollapse) {
+                        parentCollapse.classList.add('show');
+                        const parentLink = document.querySelector(`[data-bs-toggle="collapse"][href="#${parentCollapse.id}"]`);
+                        if (parentLink) {
+                            parentLink.setAttribute('aria-expanded', 'true');
+                        }
+                    }
+                }
+            });
+            
+            // Auto-fechar os alertas após 5 segundos
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                setTimeout(() => {
+                    alert.classList.add('animate__fadeOutRight');
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500);
+                }, 5000);
+            });
+            
+            // Adicionar manipuladores de eventos para os botões de fechar alertas
+            const closeButtons = document.querySelectorAll('.btn-close');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const alert = this.closest('.alert');
+                    alert.classList.add('animate__fadeOutRight');
+                    setTimeout(() => {
+                        alert.remove();
+                    }, 500);
+                });
+            });
+        });
+    </script>
+
+    <script src="{% static 'js/globalController.js' %}"></script>
+    {% block js %}
+    {% endblock %}
 </body>
 </html>

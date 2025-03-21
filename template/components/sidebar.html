@@ -1,0 +1,101 @@
+<!-- Sidebar -->
+<div class="sidebar">
+    <!-- Logo e título -->
+    <div class="sidebar-header">
+        <h3><i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span></h3>
+    </div>
+
+    <!-- Menu de navegação principal -->
+    <ul class="sidebar-menu">
+        <!-- Início -->
+        <li>
+            <a href="{% url 'home' %}" class="sidebar-link {% if request.path == '/' %}active{% endif %}" title="Início">
+                <i class="fas fa-home"></i> <span>Início</span>
+            </a>
+        </li>
+
+        <!-- Laboratórios -->
+        <li>
+            <a href="#labSubMenu" class="sidebar-link" data-bs-toggle="collapse" aria-expanded="false" title="Laboratórios">
+                <i class="fas fa-microscope"></i> <span>Laboratórios</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </a>
+            <ul class="sidebar-submenu collapse" id="labSubMenu">
+                <li><a href="#agendar-lab" title="Agendar Laboratório">Agendar Laboratório</a></li>
+                <li><a href="#meus-agendamentos" title="Meus Agendamentos">Meus Agendamentos</a></li>
+                <li><a href="#disponibilidade" title="Disponibilidade">Disponibilidade</a></li>
+            </ul>
+        </li>
+
+        <!-- Livros -->
+        <li>
+            <a href="#livrosSubMenu" class="sidebar-link" data-bs-toggle="collapse" aria-expanded="false" title="Livros">
+                <i class="fas fa-book"></i> <span>Livros</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </a>
+            <ul class="sidebar-submenu collapse" id="livrosSubMenu">
+                <li><a href="#catalogo-livros" title="Catálogo de Livros">Catálogo de Livros</a></li>
+                <li><a href="#solicitar-livro" title="Solicitar Livro">Solicitar Livro</a></li>
+                <li><a href="#minhas-solicitacoes" title="Minhas Solicitações">Minhas Solicitações</a></li>
+            </ul>
+        </li>
+
+        <!-- Modelos 3D -->
+        <li>
+            <a href="#modelosSubMenu" class="sidebar-link" data-bs-toggle="collapse" aria-expanded="false" title="Modelos 3D">
+                <i class="fas fa-cube"></i> <span>Modelos 3D</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </a>
+            <ul class="sidebar-submenu collapse" id="modelosSubMenu">
+                <li><a href="#catalogo-modelos" title="Catálogo de Modelos">Catálogo de Modelos</a></li>
+                <li><a href="#solicitar-modelo" title="Solicitar Modelo">Solicitar Modelo</a></li>
+            </ul>
+        </li>
+
+        <!-- Notícias -->
+        <li>
+            <a href="#noticias" class="sidebar-link" title="Notícias">
+                <i class="fas fa-newspaper"></i> <span>Notícias</span>
+            </a>
+        </li>
+
+        <!-- Meu Perfil -->
+        <li>
+            <a href="#perfilSubMenu" class="sidebar-link" data-bs-toggle="collapse" aria-expanded="false" title="Meu Perfil">
+                <i class="fas fa-user"></i> <span>Meu Perfil</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </a>
+            <ul class="sidebar-submenu collapse" id="perfilSubMenu">
+                <li><a href="#dados-pessoais" title="Dados Pessoais">Dados Pessoais</a></li>
+                <li><a href="#historico" title="Histórico">Histórico</a></li>
+                <li><a href="#preferencias" title="Preferências">Preferências</a></li>
+            </ul>
+        </li>
+
+        <!-- Administração -->
+        {% if user.is_staff %}
+        <li class="sidebar-divider">ADMIN</li>
+        <li>
+            <a href="{% url 'admin:index' %}" class="sidebar-link" title="Django Admin">
+                <i class="fas fa-tools"></i> <span>Django Admin</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'perfil_settings' %}" class="sidebar-link {% if 'perfil_settings' in request.path %}active{% endif %}" title="Configurações">
+                <i class="fas fa-cog"></i> <span>Configurações</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <!-- Rodapé da sidebar com botão de Sair -->
+    <div class="sidebar-footer sidebar-link">
+            <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Sair</span>
+        </a>
+    </div>
+</div>
+
+<!-- Botão para toggle da sidebar em telas pequenas -->
+<button type="button" id="sidebarToggle" class="sidebar-toggle">
+    <i class="fas fa-bars"></i>
+</button>

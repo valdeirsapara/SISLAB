@@ -1,4 +1,6 @@
 # standard
+from collections import OrderedDict
+import json
 import os
 from decouple import config
 
@@ -149,8 +151,44 @@ CONSTANCE_REDIS_CONNECTION = {
     'db': 0,
 }
 
-CONSTANCE_CONFIG  = {
-    'SITE_NAME': ('SISLAB', 'Nome do site'),
-}
 
-CONSTANCE_IGNORE_ADMIN_VERSION_CHECK = True
+JSON_CONFIGS = []
+with open('config/config.json','r', encoding='utf-8') as f:
+    JSON_CONFIGS = json.load(f)
+
+CONSTANCE_CONFIG = OrderedDict()
+CONSTANCE_ADDITIONAL_FIELDS = {}
+CONSTANCE_CONFIG_FIELDSETS = OrderedDict()
+type_mapping = {
+        'number': int,
+        'bool': bool,
+        'float': float,
+        'text': str,
+    }
+    
+
+for section in JSON_CONFIGS:
+    fieldset_fields = []
+    
+    for argument in section['arguments']:
+        if argument.get('readonly', False):
+            continue
+        default = argument.get('default', "")
+        fieldset_fields.append(argument['name'])
+        if argument['type'] == 'select':
+            CONSTANCE_ADDITIONAL_FIELDS[argument['name']] = [
+                'django.forms.fields.ChoiceField',
+                {
+                    'widget': 'django.forms.Select',
+                    'choices': tuple(argument['options'].items())
+                }
+            ]
+            CONSTANCE_CONFIG.update([(argument['name'], (default, argument['label'], argument['name']))])
+        else:
+            CONSTANCE_CONFIG.update({argument['name']: (default, argument['label'], type_mapping.get(argument['type'],str))})
+    
+    CONSTANCE_CONFIG_FIELDSETS[section['name']] = {
+        'fields': tuple(fieldset_fields),
+        'collapse': False
+    }
+

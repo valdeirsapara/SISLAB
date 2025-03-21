@@ -1,0 +1,318 @@
+/* Estilos da Sidebar - Compatível com o design atual */
+:root {
+    --sidebar-width-full: 260px;
+    --sidebar-width-mini: 70px;
+    --sidebar-bg: #1a3953;
+    --sidebar-hover: #2c5985;
+    --sidebar-active: #1e4366;
+    --sidebar-text: rgba(255, 255, 255, 0.85);
+    --sidebar-icon: rgba(255, 255, 255, 0.7);
+    --sidebar-divider: rgba(255, 255, 255, 0.1);
+    --header-bg: #2c3e50;
+}
+
+/* Layout base */
+.wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    width: calc(100% - var(--sidebar-width-mini));
+    margin-left: var(--sidebar-width-mini);
+    min-height: 100v;
+    height: 100%;
+    transition: margin-left 0.3s ease;
+}
+
+/* Sidebar principal - retraída por padrão */
+.sidebar {
+    width: var(--sidebar-width-mini);
+    background: var(--header-bg);
+    color: var(--sidebar-text);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Sidebar expandida no hover */
+.sidebar:hover {
+    width: var(--sidebar-width-full);
+}
+
+.sidebar:hover + .content {
+    margin-left: var(--sidebar-width-full);
+}
+
+/* Header da sidebar */
+.sidebar-header {
+    padding: 0px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--sidebar-divider);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    overflow: hidden;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.sidebar-header .fa-flask {
+    margin-right: 10px;
+}
+
+/* Ajuste do logo em modo retraído */
+.sidebar-header .logo-text {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: none;
+}
+
+.sidebar:hover .sidebar-header {
+    justify-content: flex-start;
+}
+
+.sidebar:hover .sidebar-header .logo-text {
+    opacity: 1;
+    display: inline;
+}
+
+/* Menu principal */
+.sidebar-menu {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu > li {
+    position: relative;
+}
+
+.sidebar-divider {
+    padding: 12px 15px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--sidebar-divider);
+    margin: 10px 0 0 0;
+}
+
+/* Links e navegação */
+.sidebar-link {
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    height: 45px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar-link:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+    text-decoration: none;
+}
+
+.sidebar-link.active {
+    background: var(--sidebar-active);
+    border-left: 4px solid #3498db;
+    color: #fff;
+    padding-left: 11px; /* 15px - 4px border */
+}
+
+.sidebar-link i:first-child {
+    margin-right: 10px;
+    color: var(--sidebar-icon);
+    min-width: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.sidebar-link:hover i {
+    color: #fff;
+}
+
+.sidebar-link .chevron {
+    margin-left: auto;
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+    opacity: 0;
+    display: none;
+}
+
+.sidebar:hover .sidebar-link .chevron {
+    opacity: 1;
+    display: block;
+}
+
+.sidebar-link[aria-expanded="true"] .chevron {
+    transform: rotate(180deg);
+}
+
+/* Texto do menu em modo retraído */
+.sidebar-link span {
+    opacity: 0;
+    transition: opacity 0.2s;
+    display: none;
+}
+
+.sidebar:hover .sidebar-link span {
+    opacity: 1;
+    display: inline;
+}
+
+/* Submenus */
+.sidebar-submenu {
+    list-style: none;
+    padding-left: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar:hover .sidebar-submenu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar-submenu.show {
+    max-height: 1000px; /* valor alto para acomodar todos os itens */
+}
+
+.sidebar-submenu a {
+    padding: 8px 15px 8px 45px;
+    display: block;
+    color: var(--sidebar-text);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.sidebar-submenu a:hover {
+    background: var(--sidebar-hover);
+    color: #fff;
+}
+
+.sidebar-submenu a.active {
+    color: #fff;
+    background: var(--sidebar-active);
+}
+
+/* Quando não em hover, os submenus serão exibidos como tooltip */
+.sidebar:not(:hover) .sidebar-link[aria-expanded="true"] + .sidebar-submenu {
+    position: absolute;
+    left: var(--sidebar-width-mini);
+    top: 0;
+    margin-top: 45px; /* alinhamento vertical com o item pai */
+    background: var(--sidebar-bg);
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 0 4px 4px 0;
+    max-height: none;
+    min-width: 200px;
+    z-index: 1001;
+}
+
+/* Rodapé da sidebar */
+.sidebar-footer {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--sidebar-divider);
+}
+
+.sidebar-footer .btn {
+    width: 100%;
+}
+
+/* Header principal do conteúdo */
+.main-header {
+    background: var(--header-bg);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sidebar {
+        margin-left: calc(-1 * var(--sidebar-width));
+    }
+    
+    .sidebar.show {
+        margin-left: 0;
+    }
+    
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .content.sidebar-open {
+        margin-left: var(--sidebar-width);
+    }
+    
+    .sidebar-toggle {
+        display: block;
+    }
+}
+
+/* Botão para toggle da sidebar em telas menores */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1050;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--header-bg);
+    color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* Animações */
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

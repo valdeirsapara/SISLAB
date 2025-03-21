@@ -1,0 +1,28 @@
+[
+    {
+        "name":"GLOBAL",
+        "descrpition":"Configurações gerais",
+        "internal":true,
+        "arguments":[
+            {
+                "name":"SITE_NAME",
+                "type":"text",
+                "default":"SISLAB",
+                "label":"Nome do site"
+            }
+        ]
+    },
+    {
+        "name":"AGENDAMENTOS",
+        "descrpition":"Configurações de Agendamentos do sistema",
+        "internal":true,
+        "arguments":[
+            {
+                "name":"LIBERAR",
+                "type":"bool",
+                "default":false,
+                "label":"Permite agendamentos de modelos 3d "
+            }
+        ]
+    }
+]

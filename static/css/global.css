@@ -11,6 +11,9 @@ body {
     background-color: #1a5276;
 }
 
+header{
+    padding: 15px;
+}
 .card {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;

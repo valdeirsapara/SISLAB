@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('contrib.urls')),  # Renderiza o template diretamente
+    path('', include('contrib.urls')),
+    path('perfil/', include('perfil.urls')),
 ]

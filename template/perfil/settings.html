@@ -1,0 +1,313 @@
+{% extends "default.html" %}
+{% load static %}
+
+{% block title %} - Painel de Configuração{% endblock %}
+
+{%block page_title%} <i class="fas fa-cog me-2"></i> Painel de Configuração{%endblock%}
+{%block page_actions%}
+    <button type="button" class="btn btn-outline-secondary btn-sm">
+        <i class="fas fa-sync-alt me-1"></i> Recuperar
+    </button>
+{%endblock%}
+
+{% block content %}
+<section class="config-panel">
+    <div class="container-fluid p-0">
+        <div class="config-container row w-full g-0">
+            <!-- Menu de categorias (lateral esquerda) -->
+            <div class="col-md-3 config-sidebar">
+                <div class="category-header">
+                    Categorias
+                </div>
+                <div class="category-menu">
+                    {% for group in config_schema %}
+                    <a href="#config-{{ group.name }}" 
+                       class="category-item d-flex justify-content-between align-items-center" 
+                       data-group="{{ group.name }}">
+                        <div>
+                            <i class="fas fa-cog me-2"></i>{{ group.name }}
+                        </div>
+                        <i class="fas fa-chevron-right category-chevron"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Área de configurações (conteúdo principal) -->
+            <div class="col-md-9 config-content">
+                <form method="post" class="config-form">
+                    {% csrf_token %}
+                    
+                    {% for group in config_schema %}
+                    <div id="config-{{ group.name }}" class="config-section" style="display: none;">
+                        <div class="section-header">
+                            {{ group.descrpition }}
+                        </div>
+                        
+                        <div class="section-content">
+                            {% for arg in group.arguments %}
+                            <div class="config-item">
+                                {% if arg.type == 'bool' %}
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label mx-4" for="{{ arg.name }}">{{ arg.label }}</label>
+                                    <input type="checkbox" class="form-check-input" id="{{ arg.name }}" name="{{ arg.name }}" 
+                                    {% if arg.value %}checked{% endif %}>
+                                </div>
+                                
+                                {% elif arg.type == 'select' %}
+                                <div class="config-field">
+                                    <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                    {% if arg.help_text %}
+                                    <div class="text-muted small mb-2">{{ arg.help_text }}</div>
+                                    {% endif %}
+                                    <select class="form-select" id="{{ arg.name }}" name="{{ arg.name }}">
+                                        {% for choice_value, choice_label in arg.choices %}
+                                        <option value="{{ choice_value }}" {% if arg.value == choice_value %}selected{% endif %}>
+                                            {{ choice_label }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                {% elif arg.type == 'number' %}
+                                <div class="config-field">
+                                    <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                    {% if arg.help_text %}
+                                    <div class="text-muted small mb-2">{{ arg.help_text }}</div>
+                                    {% endif %}
+                                    <input type="number" class="form-control" id="{{ arg.name }}" name="{{ arg.name }}" 
+                                           value="{{ arg.value }}">
+                                </div>
+                                
+                                {% else %} <!-- text e outros tipos -->
+                                <div class="config-field">
+                                    <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                    {% if arg.env_var %}
+                                    <span class="badge bg-secondary ms-2">{{ arg.env_var }}</span>
+                                    {% endif %}
+                                    {% if arg.help_text %}
+                                    <div class="text-muted small mb-2">{{ arg.help_text }}</div>
+                                    {% endif %}
+                                    <input type="text" class="form-control" id="{{ arg.name }}" name="{{ arg.name }}" 
+                                           value="{{ arg.value }}">
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% if not forloop.last %}
+                            <hr class="config-divider">
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="config-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i>Salvar Configurações
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Script para controlar a navegação entre seções -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Seleciona todos os links de navegação
+    const categoryItems = document.querySelectorAll('.category-item');
+    // Seleciona todas as seções de configuração
+    const configSections = document.querySelectorAll('.config-section');
+    
+    // Função para mostrar uma seção específica e ocultar as outras
+    function showSection(sectionId) {
+        configSections.forEach(section => {
+            section.style.display = (section.id === sectionId) ? 'block' : 'none';
+        });
+    }
+    
+    // Adiciona o evento de clique para cada item de navegação
+    categoryItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove a classe 'active' de todos os itens
+            categoryItems.forEach(nav => nav.classList.remove('active'));
+            
+            // Adiciona a classe 'active' ao item clicado
+            this.classList.add('active');
+            
+            // Mostra a seção correspondente
+            const sectionId = this.getAttribute('href').substring(1);
+            showSection(sectionId);
+        });
+    });
+    
+    // Mostra a primeira seção por padrão
+    if (categoryItems.length > 0) {
+        categoryItems[0].classList.add('active');
+        const firstSectionId = categoryItems[0].getAttribute('href').substring(1);
+        showSection(firstSectionId);
+    }
+});
+</script>
+
+<style>
+/* Estilos para a página de configuração */
+
+.config-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.config-panel {
+    height: 100%;
+    overflow: auto;
+}
+
+.config-container {
+    flex: 1;
+    display: flex;
+    overflow: auto;
+    height: calc(100dvh - 50px);
+    width: 100%;
+}
+
+/* Menu de categorias */
+.config-sidebar {
+    background-color: #34495e;
+    color: white;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.category-header {
+    padding: 15px;
+    background-color: #34495e;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-menu {
+    overflow-y: auto;
+}
+
+.category-item {
+    padding: 12px 15px;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s;
+}
+
+.category-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+}
+
+.category-item.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-left: 4px solid #3498db;
+    padding-left: 11px;
+}
+
+.category-chevron {
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
+/* Área de conteúdo */
+.config-content {
+    background-color: white;
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.section-header {
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #f9f9f9;
+}
+
+.section-content {
+    padding: 20px;
+    flex: 1;
+}
+
+.config-item {
+    margin-bottom: 20px;
+}
+
+.config-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.config-divider {
+    margin: 20px 0;
+    border-color: #e5e5e5;
+    opacity: 0.5;
+}
+
+.config-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #e5e5e5;
+    background-color: #f9f9f9;
+    text-align: right;
+    margin-top: auto;
+}
+
+/* Form controls */
+.form-switch .form-check-input {
+    width: 3em;
+    height: 1.5em;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #2c5985;
+    border-color: #2c5985;
+}
+
+.btn-primary {
+    background-color: #2c5985;
+    border-color: #2c5985;
+}
+
+.btn-primary:hover {
+    background-color: #1e4366;
+    border-color: #1e4366;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .config-container {
+        flex-direction: column;
+    }
+    
+    .config-sidebar {
+        height: auto;
+    }
+}
+</style>
+{% endblock %}
