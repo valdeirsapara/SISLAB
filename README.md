@@ -186,3 +186,17 @@ Verifique se:
 1. `STATIC_ROOT` e `STATICFILES_DIRS` apontam para diretórios diferentes
 2. Os diretórios necessários existem
 3. O Dockerfile está executando corretamente o comando `collectstatic`
+
+
+se encontrar esse erro:
+```
+ > [web internal] load build context:
+------
+failed to solve: error from sender: open /home/valdeir/projetos/sislab/data/postgres/base/1: permission denied
+```
+
+use o comando:
+`sudo setfacl -R -d -m u::rwx,g::rwx,o::rwx {caminho da raiz}/data`
+
+ou
+`sudo chmod -R 777 /home/valdeir/projetos/sislab/data`

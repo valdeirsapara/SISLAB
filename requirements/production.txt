@@ -1,0 +1,2 @@
+-r comum.txt
+uwsgi==2.0.28

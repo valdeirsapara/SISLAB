@@ -1,13 +1,21 @@
 FROM python:3.13-slim
 
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    netcat-traditional \
+    python3-dev \
+    gcc \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install
 
-RUN mkdir -p /app/src/
+# Instalar dependências
+RUN mkdir -p /app/src/requirements/
+ADD requirements/ /app/src/requirements/
 
-COPY requirements.txt /app/src/requirements.txt
+ARG requirements=production
 
 
-RUN pip install --upgrade pip
-
-RUN pip install -r /app/src/requirements.txt
+RUN pip install -r /app/src/requirements/$requirements.txt
