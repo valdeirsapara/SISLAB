@@ -8,3 +8,5 @@ data/
 __pycache__/
 
 docker-compose.override.yml
+
+media/

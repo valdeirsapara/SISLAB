@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+  web:
+    command: uwsgi --ini /app/src/uwsgi_socket.ini
+    ports:
+      - 80:8000
