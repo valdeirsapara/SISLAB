@@ -18,11 +18,10 @@ services:
     build:
       context: .
       dockerfile: docker/web/Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
     environment:
-      - DJANGO_SETTINGS_MODULE=config.settings
+      - DJANGO_SETTINGS_MODULE=config.settings.prod
     volumes:
-     - ./data/:/app/src/data/
+     - ./media/:/app/src/media/
     ports:
       - 8000:8000
     depends_on:
