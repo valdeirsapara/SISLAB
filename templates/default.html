@@ -36,6 +36,10 @@
     <!-- Layout principal com sidebar -->
     <div class="wrapper">
         <div class="main-header">
+            <!-- Botão para toggle da sidebar em telas pequenas -->
+            <button type="button" id="sidebarToggle" class="sidebar-toggle">
+                <i class="fas fa-bars"></i> teste
+            </button>
             <h1>{% block page_title %}Página Inicial{% endblock %}</h1>
             <div class="user-actions">
                 {% block page_actions %}
@@ -61,7 +65,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Script para controle da sidebar e mensagens -->
@@ -125,6 +129,7 @@
     </script>
 
     <script src="{% static 'js/globalController.js' %}"></script>
+    <script src="{% static 'js/app/sidebarController.js' %}"></script>
     {% block js %}
     {% endblock %}
 </body>

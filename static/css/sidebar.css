@@ -276,25 +276,86 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
+    /* Esconde a sidebar por padrão em mobile */
     .sidebar {
-        margin-left: calc(-1 * var(--sidebar-width));
+        width: 100%;
+        height: auto;
+        max-height: 0;
+        overflow: hidden;
+        position: fixed;
+        top: var(--header-h-mini);
+        left: 0;
+        z-index: 1010;
+        transition: max-height 0.4s ease;
+        margin-left: 0;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.2);
     }
     
+    /* Quando a sidebar estiver ativa/visível */
     .sidebar.show {
+        max-height: 80vh; /* Altura máxima quando aberto */
+        overflow-y: auto;
         margin-left: 0;
     }
     
+    /* Ajusta o conteúdo para ocupar toda a largura */
     .content {
         width: 100%;
         margin-left: 0;
     }
     
-    .content.sidebar-open {
-        margin-left: var(--sidebar-width);
-    }
-    
+    /* O botão de toggle será visível */
     .sidebar-toggle {
         display: block;
+    }
+    
+    /* Header para mobile */
+    .main-header {
+        padding-left: 60px; /* Espaço para o botão de toggle */
+    }
+    
+    /* Ajustes no header da sidebar */
+    .sidebar-header {
+        justify-content: center;
+    }
+    
+    /* Ajusta a visibilidade do texto logo no mobile */
+    .sidebar-header .logo-text {
+        opacity: 1;
+        display: inline;
+    }
+    
+    /* Garante que os textos dos links estejam sempre visíveis */
+    .sidebar-link span {
+        opacity: 1;
+        display: inline;
+    }
+    
+    /* Garante que o chevron esteja sempre visível */
+    .sidebar-link .chevron {
+        opacity: 1;
+        display: block;
+    }
+    
+    /* Submenu sempre visível quando aberto */
+    .sidebar-submenu {
+        position: static !important;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    /* Ajusta o estilo dos submenus quando abertos */
+    .sidebar-submenu.show {
+        background: rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* Otimização para telas muito pequenas */
+@media (max-width: 576px) {
+    .sidebar.show {
+        max-height: 100vh;
     }
 }
 

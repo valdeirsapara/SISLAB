@@ -6,7 +6,7 @@
     </div>
 
     <!-- Menu de navegação principal -->
-    <ul class="sidebar-menu">
+    <ul class="sidebar-menu" id="sidebarAccordion">
         <!-- Início -->
         <li>
             <a href="{% url 'home' %}" class="sidebar-link {% if request.path == '/' %}active{% endif %}" title="Início">
@@ -89,13 +89,10 @@
     </ul>
 
     <!-- Rodapé da sidebar com botão de Sair -->
-    <div class="sidebar-footer sidebar-link">
+    <div class="sidebar-footer">
+        <a href="#" class="sidebar-link">
             <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Sair</span>
         </a>
     </div>
 </div>
 
-<!-- Botão para toggle da sidebar em telas pequenas -->
-<button type="button" id="sidebarToggle" class="sidebar-toggle">
-    <i class="fas fa-bars"></i>
-</button>
