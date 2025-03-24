@@ -1,4 +1,4 @@
 from .comum import *
 
 
-TEMPLATES['APP_DIRS']= True
+TEMPLATES[0]['APP_DIRS']= True
