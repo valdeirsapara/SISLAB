@@ -46,8 +46,7 @@
                 <i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span>
                 {%endblock%}
             </h1>
-            {{request.user}}
-            <div class="user-actions">
+                        <div class="user-actions">
                 {% block page_actions %}
                     {% if request.user.is_authenticated %}
                         <div><i class="fas fa-user"></i> {{ request.user.username }}</div>
