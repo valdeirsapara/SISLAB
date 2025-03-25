@@ -9,7 +9,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-print(BASE_DIR)
 
 
 
@@ -43,6 +42,7 @@ INSTALLED_APPS += [
     'laboratory',
     'news',
     'perfil',
+    'custom_auth'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 ROOT_URLCONF = 'config.urls'
 
@@ -106,7 +108,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Custom authentication backends
+AUTHENTICATION_BACKENDS = [
+    'custom_auth.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+]
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 

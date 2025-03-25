@@ -1,14 +1,17 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.urls import reverse
 from django.conf import settings
+from django.shortcuts import render
 from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+
 from constance import config
 from constance.admin import get_values
-from django.urls import reverse
 
 
 
 # Create your views here.
+@login_required
 def settings_view(request):
     config_schema = settings.JSON_CONFIGS
 

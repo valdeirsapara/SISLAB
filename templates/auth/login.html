@@ -1,0 +1,161 @@
+{% extends 'default.html'%}
+
+{% block title %} - Login{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block page_actions %}
+{% endblock %}
+{%block messages%}
+{%endblock%}
+{%block css%}
+
+<style>
+    body {
+        background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://via.placeholder.com/1920x1080') center/cover no-repeat;
+        background-attachment: fixed;
+    }
+    .card-header{
+        background-color: #154360!important;
+    }
+    
+    .login-container {
+        min-height: calc(100vh - 50px); /* Altura total menos a altura do header */
+    }
+    
+    .login-card {
+        width: 100%;
+        max-width: 420px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: none;
+    }
+    
+    .login-card .card-header {
+        border-radius: 8px 8px 0 0;
+        background-color: #1a5276;
+    }
+    
+    .login-card .btn-primary {
+        background-color: #1a5276;
+        border-color: #1a5276;
+    }
+    
+    .login-card .btn-primary:hover {
+        background-color: #154360;
+        border-color: #154360;
+    }
+    
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+    }
+    
+    .form-control {
+        border-left: none;
+    }
+    
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #ced4da;
+    }
+    
+    /* Remover o header principal para a página de login */
+    .main-header {
+        display: none;
+    }
+    
+    /* Ajuste responsivo */
+    @media (max-width: 576px) {
+        .login-card {
+            max-width: 90%;
+        }
+    }
+</style>
+{%endblock%}
+{% block content %}
+<div class="d-flex flex-column justify-content-center align-items-center login-container">
+    {%if messages%}
+    {%for message in messages%}
+        {%if message.tags == 'error'%}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {%endif%}
+        {% if message.tags == 'success'%}
+        <div class="alert alert-success" role="alert">
+            {{message}}
+        </div>  
+        {%endif%}
+        {%if message.tags == 'info'%}
+        <div class="alert alert-info" role="alert">
+            {{message}}
+        </div>
+        {%endif%}
+    {%endfor%}
+    {%endif%}
+    <div class="card login-card shadow">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h3 class="mb-0"><i class="fas fa-flask me-2"></i>{{config.SITE_NAME}}</h3>
+            <p class="mb-0 mt-2">Sistema de Gerenciamento de Recursos Laboratoriais</p>
+        </div>
+        
+        <div class="card-body p-4">
+            {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>Email ou senha inválidos. Por favor, tente novamente.
+            </div>
+            {% endif %}
+            
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" name="email" id="email" class="form-control" placeholder="Email do usuário" required autofocus>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label">Senha:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Senha" required>
+                    </div>
+                </div>
+                
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                    </button>
+                </div>
+                
+                <!-- <div class="text-center">
+                    <a href="#" class="text-decoration-none text-muted">
+                        <small><i class="fas fa-question-circle me-1"></i>Esqueci minha senha</small>
+                    </a>
+                </div> -->
+                
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+            </form>
+        </div>
+        
+        <div class="card-footer text-center bg-light py-3">
+            <small class="text-muted">Precisa de acesso? Entre em contato com o administrador do sistema.</small>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    // Força o foco no campo de usuário quando a página carrega
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('username').focus();
+    });
+</script>
+{% endblock %}

@@ -22,7 +22,8 @@
 </head>
 <body>
     <!-- Sistema de mensagens -->
-    {% if messages %}
+    {%block messages%}
+        {% if messages %}
         <div class="messages-container position-fixed top-0 end-0 p-3 mt-2 me-2" style="z-index: 1050; max-width: 300px;">
             {% for message in messages %}
             <div class="alert alert-{{ message.tags }} shadow-sm mb-2 p-2 ps-3 animate__animated animate__fadeInRight">
@@ -31,7 +32,8 @@
             </div>
             {% endfor %}
         </div>
-    {% endif %}
+        {% endif %}
+    {%endblock%}
     
     <!-- Layout principal com sidebar -->
     <div class="wrapper">
@@ -40,16 +42,26 @@
             <button type="button" id="sidebarToggle" class="sidebar-toggle">
                 <i class="fas fa-bars"></i> teste
             </button>
-            <h1>{% block page_title %}Página Inicial{% endblock %}</h1>
+            <h1>{% block page_title %}
+                <i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span>
+                {%endblock%}
+            </h1>
+            {{request.user}}
             <div class="user-actions">
                 {% block page_actions %}
-                    <a href="/admin" class="btn btn-outline-light btn-sm">
-                        <i class="fas fa-user"></i> login
-                    </a>
-                {%endblock%}
+                    {% if request.user.is_authenticated %}
+                        <div><i class="fas fa-user"></i> {{ request.user.username }}</div>
+                    {% else %}
+                        <a href="/login?next=/" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-user"></i> Login
+                        </a>
+                    {% endif %}
+                {% endblock %}
             </div>
         </div>
-        {% include 'components/sidebar.html' %}
+        {%block sidebar%}
+            {% include 'components/sidebar.html' %}
+        {%endblock%}
         <!-- Sidebar -->
         <!-- Conteúdo principal -->
         <div class="content w-100 h-100" id="mainContent">
