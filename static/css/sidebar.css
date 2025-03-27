@@ -256,7 +256,7 @@
 .main-header {
     background: var(--header-bg);
     color: white;
-    padding: 10px 20px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
