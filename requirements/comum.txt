@@ -10,3 +10,4 @@ stack-data==0.6.3
 traitlets==5.14.3
 wcwidth==0.2.13
 whitenoise==6.9.0
+psycopg2-binary==2.9.10
