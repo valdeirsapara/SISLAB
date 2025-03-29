@@ -23,11 +23,18 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
-
+#
 # Application definition
+#
 
+# third-party apps
 INSTALLED_APPS = [
     'constance',
+    'django_extensions',
+]
+
+# django apps
+INSTALLED_APPS += [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +44,7 @@ INSTALLED_APPS = [
 
 ]
 
+# local apps
 INSTALLED_APPS += [
     'contrib',
     'laboratory',
