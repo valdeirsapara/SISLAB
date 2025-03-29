@@ -214,3 +214,8 @@ for section in JSON_CONFIGS:
 
 
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS',default='https://localhost:8000;http://localhost:8000',).split(';')
+
+#
+# shell_plus
+#
+SHELL_PLUS = "ipython"
