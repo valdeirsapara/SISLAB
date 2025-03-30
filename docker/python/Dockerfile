@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Instalar dependências
 RUN mkdir -p /app/src/requirements/
+RUN pip install --upgrade pip
 ADD requirements/ /app/src/requirements/
 
 ARG requirements=production
