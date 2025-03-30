@@ -60,6 +60,7 @@
         </li>
 
         <!-- Meu Perfil -->
+        {% if request.user.is_authenticated %}
         <li>
             <a href="#perfilSubMenu" class="sidebar-link" data-bs-toggle="collapse" aria-expanded="false" title="Meu Perfil">
                 <i class="fas fa-user"></i> <span>Meu Perfil</span>
@@ -71,6 +72,7 @@
                 <li><a href="#preferencias" title="Preferências">Preferências</a></li>
             </ul>
         </li>
+        {%endif%}
 
         <!-- Administração -->
         {% if user.is_staff %}
@@ -89,10 +91,13 @@
     </ul>
 
     <!-- Rodapé da sidebar com botão de Sair -->
+
+    {% if request.user.is_authenticated %}
     <div class="sidebar-footer">
         <a href="{% url 'logout'%}" class="sidebar-link">
             <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Sair</span>
         </a>
     </div>
+    {%endif%}
 </div>
 
