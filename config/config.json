@@ -11,5 +11,18 @@
                 "label":"Nome do site"
             }
         ]
+    },
+    {
+        "name":"LABORATORIO",
+        "descrpition":"Configurações do Laboratório",
+        "internal":true,
+        "arguments":[
+            {
+                "name":"ALUGEL_LABORATORIO",
+                "type":"bool",
+                "default":true,
+                "label":"Habilita possibilidade de alugar laboratorio"
+            }
+        ]
     }
 ]

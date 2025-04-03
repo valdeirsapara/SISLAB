@@ -6,7 +6,9 @@
 <section class="hero py-4" id="inicio">
     <div class="container">
         <div class="row align-items-center">
-            {% include 'components/lab_status.html' %}
+            {% if config.ALUGEL_LABORATORIO %}
+                {% include 'components/lab_status.html' %}
+            {%endif%}
             {% include 'components/acesso_rapido.html' %}
         </div>
     </div>

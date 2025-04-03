@@ -40,17 +40,19 @@
     <div class="wrapper">
         <div class="main-header">
             <!-- Botão para toggle da sidebar em telas pequenas -->
-            <button type="button" id="sidebarToggle" class="sidebar-toggle">
-                <i class="fas fa-bars"></i> teste
-            </button>
-            <h1>{% block page_title %}
-                <i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span>
-                {%endblock%}
-            </h1>
+            <div class="d-flex align-items-center">
+                <button type="button" id="sidebarToggle" class="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>{% block page_title %}
+                   <a href="/" class="text-decoration-none  text-white"> <i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span></a>
+                    {%endblock%}
+                </h1>
+            </div>
                         <div class="user-actions">
                 {% block page_actions %}
                     {% if request.user.is_authenticated %}
-                        <div><i class="fas fa-user"></i> {{ request.user.username }}</div>
+                        <div><i class="fas fa-user"></i> {{ request.user.get_full_name }}</div>
                     {% else %}
                         <a href="/login?next=/" class="btn btn-outline-light btn-sm">
                             <i class="fas fa-user"></i> Login

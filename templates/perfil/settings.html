@@ -49,14 +49,22 @@
                             <div class="config-item">
                                 {% if arg.type == 'bool' %}
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label mx-4" for="{{ arg.name }}">{{ arg.label }}</label>
-                                    <input type="checkbox" class="form-check-input" id="{{ arg.name }}" name="{{ arg.name }}" 
-                                    {% if arg.value %}checked{% endif %}>
+                                    <div class="flex justify-content-between" style="display: flex;">
+                                        <div>
+                                            <label for="{{ arg.name }}" class="form-check-label mx-4">{{ arg.label }}</label>
+                                            <input type="checkbox" class="form-check-input" id="{{ arg.name }}" name="{{ arg.name }}" 
+                                            {% if arg.value %}checked{% endif %}>
+                                        </div>
+                                        <div class="text-muted small px-4">{{ arg.name }}</div>
+                                    </div>
                                 </div>
                                 
                                 {% elif arg.type == 'select' %}
                                 <div class="config-field">
-                                    <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                    <div class="flex justify-content-between align-items-center " style="display: flex;">
+                                        <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                        <div class="text-muted small px-4">{{ arg.name }}</div>
+                                    </div>
                                     {% if arg.help_text %}
                                     <div class="text-muted small mb-2">{{ arg.help_text }}</div>
                                     {% endif %}
@@ -71,7 +79,10 @@
                                 
                                 {% elif arg.type == 'number' %}
                                 <div class="config-field">
-                                    <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                    <div class="flex justify-content-between align-items-center " style="display: flex;">
+                                        <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                        <div class="text-muted small px-4">{{ arg.name }}</div>
+                                    </div>
                                     {% if arg.help_text %}
                                     <div class="text-muted small mb-2">{{ arg.help_text }}</div>
                                     {% endif %}
@@ -81,12 +92,12 @@
                                 
                                 {% else %} <!-- text e outros tipos -->
                                 <div class="config-field">
-                                    <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                    <div class="flex justify-content-between align-items-center " style="display: flex;">
+                                        <label for="{{ arg.name }}" class="form-label">{{ arg.label }}</label>
+                                        <div class="text-muted small px-4">{{ arg.name }}</div>
+                                    </div>
                                     {% if arg.env_var %}
                                     <span class="badge bg-secondary ms-2">{{ arg.env_var }}</span>
-                                    {% endif %}
-                                    {% if arg.help_text %}
-                                    <div class="text-muted small mb-2">{{ arg.help_text }}</div>
                                     {% endif %}
                                     <input type="text" class="form-control" id="{{ arg.name }}" name="{{ arg.name }}" 
                                            value="{{ arg.value }}">

@@ -58,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
   if (sidebarToggle) {
     sidebarToggle.addEventListener('click', function() {
-      sidebar.classList.toggle('show');
-      content.classList.toggle('sidebar-open');
+      sidebar.classList.add('show');
+      content.classList.add('sidebar-open');
     });
   }
 });

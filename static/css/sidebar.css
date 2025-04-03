@@ -306,12 +306,12 @@
     
     /* O botão de toggle será visível */
     .sidebar-toggle {
-        display: block;
+        display: flex;
     }
     
     /* Header para mobile */
     .main-header {
-        padding-left: 60px; /* Espaço para o botão de toggle */
+        padding-left: 0px; /* Espaço para o botão de toggle */
     }
     
     /* Ajustes no header da sidebar */
@@ -346,6 +346,9 @@
         border-radius: 0;
     }
     
+    .sidebar-toggle {
+        display: block !important;
+    }
     /* Ajusta o estilo dos submenus quando abertos */
     .sidebar-submenu.show {
         background: rgba(0, 0, 0, 0.2);
@@ -353,23 +356,20 @@
 }
 
 /* Otimização para telas muito pequenas */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
     .sidebar.show {
         max-height: 100vh;
     }
 }
 
+
 /* Botão para toggle da sidebar em telas menores */
 .sidebar-toggle {
     display: none;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 1050;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--header-bg);
+    background: transparent;
     color: white;
     border: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
