@@ -1,0 +1,44 @@
+{% load static %}
+<!-- mobile-header.html -->
+<div class="mobile-header d-md-none">
+  <div class="mobile-header-container">
+    <div class="mobile-header-left">
+      <button type="button" id="mobileSidebarToggle" class="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+      <a href="/" class="mobile-logo">
+        <i class="fas fa-flask"></i>
+        <span>{{config.SITE_NAME}}</span>
+      </a>
+    </div>
+    
+    <div class="mobile-header-right">
+      {% if request.user.is_authenticated %}
+        <div class="mobile-user-menu">
+          <button class="mobile-user-btn" id="mobileUserMenuToggle">
+            <i class="fas fa-user-circle"></i>
+          </button>
+          <div class="mobile-user-dropdown" id="mobileUserDropdown">
+            <div class="mobile-user-info">
+              <i class="fas fa-user"></i>
+              <span>{{ request.user.get_full_name }}</span>
+            </div>
+            <div class="mobile-user-info">
+              <i class="fas fa-envelope"></i>
+              <span>{{ request.user.email}}</span>
+            </div>
+            <div class="mobile-user-links">
+              <a href="{% url 'logout' %}" class="mobile-logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Sair
+              </a>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <a href="/login?next=/" class="btn btn-sm btn-outline-light mobile-login-btn">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
