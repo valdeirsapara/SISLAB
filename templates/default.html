@@ -28,9 +28,11 @@
         {% if messages %}
         <div class="messages-container position-fixed top-0 end-0 p-3 mt-2 me-2" style="z-index: 1050; max-width: 300px;">
             {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} shadow-sm mb-2 p-2 ps-3 animate__animated animate__fadeInRight">
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger shadow-sm mb-2 p-2 ps-3 animate__animated animate__fadeInRight">
+            {% endif %}
                 <small>{{ message }}</small>
-                <button type="button" class="btn-close btn-close-sm float-end ms-2" data-bs-dismiss="alert" aria-label="Close"></button>
+                <!-- <button type="button" class="btn-close btn-close-sm float-end ms-2" data-bs-dismiss="alert" aria-label="Close"></button> -->
             </div>
             {% endfor %}
         </div>
@@ -46,7 +48,7 @@
         <div class="main-header d-none d-md-flex">
             <div class="d-flex align-items-center">
                 <h1>{% block page_title %}
-                   <a href="/" class="text-decoration-none text-white"> <i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span></a>
+                        <a href="/" class="text-decoration-none text-white"> <i class="fas fa-flask"></i> <span class="logo-text">{{config.SITE_NAME}}</span></a>
                     {%endblock%}
                 </h1>
             </div>

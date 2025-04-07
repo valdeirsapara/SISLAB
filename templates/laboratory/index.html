@@ -1,0 +1,21 @@
+{% extends 'default.html' %}
+
+
+{% block page_title %}
+<i class="fas fa-microscope"></i> <span>Laboratorios</span>
+{%endblock%}
+{% block page_actions %}
+<a href="add/" class="btn btn-outline-light">
+    Adicinoar
+</a>
+{% endblock%}
+
+{% block content %}
+        <div class="container-fluid py-4 row g-6"> 
+            {% if laboratorios %}
+                {%include 'laboratory/list_laboratory.html'%}
+            {%else%}
+                <p>Não há laboratórios disponíveis no momento.</p>
+            {%endif%}
+        </div>
+{% endblock %}

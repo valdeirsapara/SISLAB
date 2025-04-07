@@ -1,0 +1,18 @@
+{%for laboratorio in laboratorios %}
+    <div class="card col col-md">
+        <div class="card-title ">
+            <b>{{laboratorio.nome}}</b>
+        </div>
+        <div class="card-body">
+            <div class="card-text">
+                {% if laboratorio.status == 0 %}
+                <p><b>Status:</b> disponível</p>
+                {% elif laboratorio.status == 1 %}
+                <p><b>Status:</b> indisponivel</p>
+                {%endif%}
+
+                <a href="add/{{laboratorio.id}}" class="btn btn-primary"> editar</a>
+            </div>
+        </div>
+    </div>
+{%endfor%}
