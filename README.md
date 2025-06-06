@@ -17,6 +17,7 @@ O sistema possui um fluxo de aprovação onde as solicitações dos usuários pr
 
 ### 1. Pré-requisitos
 
+- Python 3.11 ou superior
 - Docker
 - Docker Compose
 
@@ -126,7 +127,7 @@ http://localhost (ou http://localhost:80)
 
 ## Execução sem Docker (Desenvolvimento Local)
 
-Caso prefira executar o sistema diretamente sem Docker, siga estas etapas:
+Caso prefira executar o sistema diretamente sem Docker, siga estas etapas (certifique-se de utilizar **Python 3.11 ou superior**):
 
 ### 1. Configure o ambiente
 
