@@ -1,0 +1,4 @@
+.messages-container {
+    z-index: 1050;
+    max-width: 300px;
+}
