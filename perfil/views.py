@@ -38,12 +38,10 @@ def settings_view(request):
     for group in config_schema:
         for arg in group.get('arguments', []):
             arg_name = arg['name']
-            for arg in group.get('arguments', []):
+            if arg_name in current_values:
                 arg['value'] = current_values[arg_name]
-                if arg_name in current_values:
-                    arg['value'] = current_values[arg_name]
-                else:
-                    arg['value'] = arg.get('default', '')
+            else:
+                arg['value'] = arg.get('default', '')
             
     return render(request, 'perfil/settings.html', {
         'config_schema': config_schema,
