@@ -2,7 +2,15 @@ from django.contrib.auth import get_user_model
 
 
 def unique_username(user):
-    """Generate a unique username based on first and last name."""
+    """
+    Gera um username único baseado no primeiro e último nome do usuário.
+    
+    Args:
+        user: Instância do modelo User
+        
+    Returns:
+        str: Username único gerado
+    """
     base_username = f"{user.first_name}_{user.last_name}".lower().replace(" ", "_")
     username = base_username
     UserModel = get_user_model()
